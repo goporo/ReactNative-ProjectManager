@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model USER_ACCOUNT {
+  US_ID       Int        @id @default(0)
+  US_ACCOUNT  String
+  US_PASSWORD String
+  TOKEN       String?
+  USER_INFO   USER_INFO?
+}
+
+model USER_INFO {
+  US_ID          Int              @id @default(0)
+  US_NAME        String?
+  US_MAIL        String?
+  US_PHONE       String?
+  US_BIRTH       DateTime?
+  US_GENDER      String?
+  US_ADDRESS     String?
+  USER_ACCOUNT   USER_ACCOUNT     @relation(fields: [US_ID], references: [US_ID])
+  PROJECT_MEMBER PROJECT_MEMBER[]
+}
+
+model PROJECT_ACCESSIBILITY {
+  MEM_POS            Int              @id
+  DEL_PJ             String?
+  EDIT_MEM_POS       String?
+  EDIT_MEM           String?
+  EDIT_STATUS        String?
+  EDIT_LABEL         String
+  CREATE_ANNOUNC_MNT String?          @map("CREATE_ANNOUNCÊMNT")
+  PROJECT_MEMBER     PROJECT_MEMBER[]
+}
+
+model PROJECT_INFO {
+  PJ_ID           Int              @id
+  PJ_NAME         String?
+  PJ_CREATEDAY    DateTime?
+  PJ_DEADLINE     DateTime?
+  PJ_STATUS       String?
+  PJ_ADMIN        Int?
+  PJ_OWNER        String?
+  LABELS          LABEL[]           
+  ADMIN           PROJECT_MEMBER?  @relation("PROJECT_INFO_PJ_ID_PJ_ADMINToPROJECT_MEMBER", fields: [PJ_ID, PJ_ADMIN], references: [PJ_ID, MEM_ID])
+  PROJECT_MEMBERS PROJECT_MEMBER[] @relation("PROJECT_INFOToPROJECT_MEMBER_PJ_ID")
+  TASK_INFO       TASK_INFO[]
+}
+
+model PROJECT_MEMBER {
+  PJ_ID                 Int
+  MEM_ID                Int
+  MEM_POS               Int?
+  USER_INFO             USER_INFO              @relation(fields: [MEM_ID], references: [US_ID])
+  PROJECT_ACCESSIBILITY PROJECT_ACCESSIBILITY? @relation(fields: [MEM_POS], references: [MEM_POS])
+  TASK_ACCESSIBILITY    TASK_ACCESSIBILITY?    @relation(fields: [MEM_POS], references: [MEM_POS])
+  PROJECT_INFO          PROJECT_INFO           @relation("PROJECT_INFOToPROJECT_MEMBER_PJ_ID", fields: [PJ_ID], references: [PJ_ID])
+  PROJECTS              PROJECT_INFO[]         @relation("PROJECT_INFO_PJ_ID_PJ_ADMINToPROJECT_MEMBER")
+  TASK_INFO             TASK_INFO[]
+  TASK_RESPONDSIPLE     TASK_RESPONDSIPLE[]
+
+  @@id([PJ_ID, MEM_ID])
+}
+
+model TASK_ACCESSIBILITY {
+  MEM_POS          Int              @id
+  EDIT_MEM         String?
+  ADD_TASK         String?
+  DEL_TASK         String?
+  EDIT_NAME        String?
+  EDIT_DEADLINE    String?
+  EDIT_STATUS      String?
+  EDIT_DESCRIPTION String?
+  PROJECT_MEMBER   PROJECT_MEMBER[]
+}
+model LABEL{
+  PJ_ID Int
+  LB_ID Int
+  LB_NAME String
+  PROJECT_INFO      PROJECT_INFO        @relation(fields: [PJ_ID], references: [PJ_ID])
+  TASK_INFO         TASK_INFO[]
+   @@id([PJ_ID, LB_ID])
+}
+model TASK_INFO {
+  PJ_ID             Int
+  TASK_ID           Int
+  TASK_STATUS       String?
+  TASK_NAME         String?
+  TASK_DESCRIPTION   String?
+  TASK_CREATEDAY    DateTime?
+  TASK_DEADLINE     DateTime?
+  TASK_CREATOR      Int?
+  TASK_LABEL        Int
+  LABELS            LABEL               @relation(fields:[PJ_ID,TASK_LABEL],references: [PJ_ID, LB_ID])
+  PROJECT_INFO      PROJECT_INFO        @relation(fields: [PJ_ID], references: [PJ_ID])
+  PROJECT_MEMBER    PROJECT_MEMBER?     @relation(fields: [PJ_ID, TASK_CREATOR], references: [PJ_ID, MEM_ID])
+  TASK_RESPONDSIPLE TASK_RESPONDSIPLE[]
+
+  @@id([PJ_ID, TASK_ID])
+}
+
+model TASK_RESPONDSIPLE {
+  PJ_ID          Int
+  TASK_ID        Int
+  MEM_ID         Int
+  PROJECT_MEMBER PROJECT_MEMBER @relation(fields: [PJ_ID, MEM_ID], references: [PJ_ID, MEM_ID])
+  TASK_INFO      TASK_INFO      @relation(fields: [PJ_ID, TASK_ID], references: [PJ_ID, TASK_ID])
+
+  @@id([PJ_ID, TASK_ID, MEM_ID])
+}

@@ -1,0 +1,364 @@
+PATCH   http://localhost:9696/login
+Content-Type: application/json
+
+{
+  "access": {
+    "US_ID":1,
+    "US_ACCOUNT":"taigavn113",
+    "US_PASSWORD":"123456",
+    "TOKEN":null
+},
+  "US_NEWPASS": "passchanged"
+}
+
+### this is login
+PUT   http://localhost:9696/login
+Content-Type: application/json
+
+{
+    "US_ID":4,
+    "US_ACCOUNT":"goporo",
+    "US_PASSWORD":"123456",
+    "TOKEN":null
+}
+
+### this is Sign up
+POST   http://localhost:9696/login
+Content-Type: application/json
+
+{
+    "US_ID":99,
+    "US_ACCOUNT":"test2",
+    "US_PASSWORD":"123456",
+    "TOKEN":null
+}
+
+### this how to get personal info
+GET   http://localhost:9696/info
+Content-Type: application/json
+
+{
+    "US_ID":3,
+    "US_ACCOUNT":"PhamMinhTai1",
+    "US_PASSWORD":"123456",
+    "TOKEN":null
+}
+### this is form to update personal info
+POST   http://localhost:9696/info
+Content-Type: application/json
+
+{
+"access":{
+    "US_ID":3,
+    "US_ACCOUNT":"PhamMinhTai1",
+    "US_PASSWORD":"123456",
+    "TOKEN":null
+        },
+"data":{   
+    "US_ID": 3,
+    "US_NAME": "Pham Minh Tai",
+    "US_MAIL": "pmt@clc.fitus.edu.vn",
+    "US_PHONE": "0123456789",
+    "US_BIRTH": "11/21/2002",
+    "US_GENDER": "0",
+    "US_ADDRESS": "HCM city3, Vietnam"
+    }
+}
+### this is how to connect Project
+PUT   http://localhost:9696/project
+Content-Type: application/json
+
+{"PJ_ID":3
+,"MEM_ID":4
+,"MEM_POS":0}
+###this is how to create project
+POST http://localhost:9696/project
+Content-Type: application/json
+//các thuộc tính được cmt bắt buộc phải thay đổi giá trị với mỗi user
+//còn lại thì không cần điền
+//PJ_ID,PJ_CREATEDAY,PJ_ADMIN sẽ được tự động cập nhật
+
+{
+  "access": {
+    "US_ID":4,
+    "US_ACCOUNT":"goporo",
+    "US_PASSWORD":"123456",
+    "TOKEN":null
+},
+  "data":{
+      "PJ_ID": 99,
+      "PJ_NAME": "PRJ TEST",
+      "PJ_CREATEDAY": "2022-08-05T14:03:50.911Z",
+      "PJ_DEADLINE": "09/09/2022",
+      "PJ_STATUS": "0",
+      "PJ_ADMIN": 1,
+      "PJ_OWNER": "Khoa CNTT"
+  }
+}
+### delete Project
+PUT  http://localhost:9696/project
+Content-Type: application/json
+
+{
+  "access": {
+    "PJ_ID":14
+    ,"MEM_ID":3
+    ,"MEM_POS":0
+}}
+
+### update project info
+PATCH http://localhost:9696/project
+Content-Type: application/json
+//các thuộc tính được cmt bắt buộc phải thay đổi giá trị với mỗi user
+//còn lại thì không cần điền
+//PJ_ID,PJ_CREATEDAY,PJ_ADMIN sẽ được tự động cập nhật
+
+{
+  "access": {
+     "PJ_ID":1
+    ,"MEM_ID":1
+    ,"MEM_POS":0
+  },
+  "data":{
+      "PJ_ID": 0,
+      "PJ_NAME": "Project 3",
+      "PJ_CREATEDAY": "2022-08-05T14:03:50.911Z",
+      "PJ_DEADLINE": "09/09/2022",
+      "PJ_STATUS": "0",
+      "PJ_ADMIN": 1,
+      "PJ_OWNER": "SIMPLE"
+  }
+}
+### add member to project
+POST  http://localhost:9696/member
+Content-Type: application/json
+
+{
+  "access": {
+     "PJ_ID":3
+    ,"MEM_ID":4
+    ,"MEM_POS":0
+  },
+  "data":{
+    "US_ID": 6,
+    "US_NAME": "Pham Minh Tai",
+    "US_MAIL": "pmt@clc.fitus.edu.vn",
+    "US_PHONE": "0123456789",
+    "US_BIRTH": "11/21/2002",
+    "US_GENDER": "0",
+    "US_ADDRESS": "HCM city3, Vietnam"
+  }
+}
+### delete a member
+DELETE   http://localhost:9696/member
+Content-Type: application/json
+
+{
+  "access": {
+     "PJ_ID":1
+    ,"MEM_ID":2
+    ,"MEM_POS":0
+  },
+  "data":{
+     "PJ_ID":1
+    ,"MEM_ID":2
+    ,"MEM_POS":0
+  }
+}
+
+### change position
+PATCH    http://localhost:9696/member
+Content-Type: application/json
+
+{
+  "access": {
+     "PJ_ID":1
+    ,"MEM_ID":1
+    ,"MEM_POS":0
+  },
+  "data":{
+     "PJ_ID":1
+    ,"MEM_ID":2
+    ,"MEM_POS":2
+  }
+}
+
+### get labels
+POST http://localhost:9696/label
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":3
+    ,"MEM_ID":4
+    ,"MEM_POS":0
+  }
+}
+### create label
+POST http://localhost:9696/label
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":3
+    ,"MEM_ID":4
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID":3,
+    "LB_ID":3,
+    "LB_NAME": "on going"
+  }
+}
+### change label name
+PATCH http://localhost:9696/label
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":3
+    ,"MEM_ID":4
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID":99,
+    "LB_ID":3,
+    "LB_NAME": "CC"
+  }
+}
+### delete label
+DELETE  http://localhost:9696/label
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":3
+    ,"MEM_ID":4
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID":99,
+    "LB_ID":3,
+    "LB_NAME": "99"
+  }
+}
+### create task
+POST  http://localhost:9696/task
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":3 
+    ,"MEM_ID":4
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID": 3,
+    "TASK_ID": 99,
+    "TASK_STATUS": "99",
+    "TASK_NAME": "label 2 task ",
+    "TASK_DESCRIPTION": "99",
+    "TASK_CREATEDAY": null,
+    "TASK_DEADLINE": null,
+    "TASK_CREATOR": 1,
+    "TASK_LABEL": 2
+  }
+}
+### delete task
+PUT  http://localhost:9696/delete/task
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":4
+    ,"MEM_ID":4
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID": 4,
+    "TASK_ID": 1,
+    "TASK_STATUS": "0",
+    "TASK_NAME": "99",
+    "TASK_DESCRIPTION": "99",
+    "TASK_CREATEDAY": null,
+    "TASK_DEADLINE": null,
+    "TASK_CREATOR": 99,
+    "TASK_LABEL": 1
+  }
+}
+### update task
+PATCH  http://localhost:9696/task
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":1 
+    ,"MEM_ID":1
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID": 1,
+    "TASK_ID": 4,
+    "TASK_STATUS": "1",
+    "TASK_NAME": "success",
+    "TASK_DESCRIPTION": "da cap nhat",
+    "TASK_CREATEDAY": null,
+    "TASK_DEADLINE": null,
+    "TASK_CREATOR": 1,
+    "TASK_LABEL": 2
+  }
+}
+### assign member to  task
+POST  http://localhost:9696/taskmember
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":1 
+    ,"MEM_ID":2
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID": 1,
+    "TASK_ID": 4,
+    "TASK_STATUS": "1",
+    "TASK_NAME": "success",
+    "TASK_DESCRIPTION": "da cap nhat",
+    "TASK_CREATEDAY": null,
+    "TASK_DEADLINE": null,
+    "TASK_CREATOR": 1,
+    "TASK_LABEL": 2
+  },
+    "member": {
+     "PJ_ID":1 
+    ,"MEM_ID":3
+    ,"MEM_POS":0
+  }
+}
+### unassign member to  task
+DELETE  http://localhost:9696/taskmember
+Content-Type: application/json
+
+{
+    "access": {
+     "PJ_ID":1 
+    ,"MEM_ID":1
+    ,"MEM_POS":0
+  },
+  "data":{
+    "PJ_ID": 1,
+    "TASK_ID": 4,
+    "TASK_STATUS": "1",
+    "TASK_NAME": "success",
+    "TASK_DESCRIPTION": "da cap nhat",
+    "TASK_CREATEDAY": null,
+    "TASK_DEADLINE": null,
+    "TASK_CREATOR": 1,
+    "TASK_LABEL": 2
+  },
+    "member": {
+     "PJ_ID":1 
+    ,"MEM_ID":2
+    ,"MEM_POS":0
+  }
+}

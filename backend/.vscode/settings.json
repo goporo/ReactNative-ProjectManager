@@ -1,0 +1,10 @@
+{
+    "editor.formatOnSave": false,
+    "prettier.insertPragma": true,
+    "prettier.requireConfig": true,
+    "prettier.requirePragma": true,
+    "editor.formatOnPaste": false,
+    "workbench.editor.autoLockGroups": {
+        "default": true
+    }
+}
