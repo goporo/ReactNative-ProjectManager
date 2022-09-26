@@ -1,5 +1,5 @@
 # ReactNative_ProjectManager
-Team $ Tasks Manager
+Team & Tasks Manager
 
 <div style="display:flex">
 <img src="https://user-images.githubusercontent.com/44795363/191411253-70dc58df-1f27-4c21-9525-fe62f9e3cfc4.jpg" style="width:250px"/>
