@@ -1,4 +1,4 @@
-# ReactNative_ProjectManager
+# React Native Project Management
 Team & Tasks Manager
 
 <div style="display:flex">
